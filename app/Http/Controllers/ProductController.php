@@ -27,7 +27,9 @@ class ProductController extends Controller
     {
         $product = Product::findOrFail($product);
 
-        return view('products.show');
+        return view('products.show')->with([
+            'product' => $product,
+        ]);
     }
 
     public function edit($product)
