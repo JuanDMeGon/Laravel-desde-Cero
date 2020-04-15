@@ -5,6 +5,11 @@
     <title>Learn Laravel</title>
 </head>
 <body>
+    @if (session()->has('error'))
+        <div class="alert alert-danger">
+            {{ session()->get('error') }}
+        </div>
+    @endif
     @yield('content')
 </body>
 </html>

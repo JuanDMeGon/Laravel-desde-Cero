@@ -20,13 +20,12 @@ class ProductController extends Controller
 
     public function store()
     {
-        // $product = Product::create([
-        //     'title' => request()->title,
-        //     'description' => request()->description,
-        //     'price' => request()->price,
-        //     'stock' => request()->stock,
-        //     'status' => request()->status,
-        // ]);
+        if (request()->status == 'available' && request()->stock == 0) {
+            // session()->put('error', 'If available must have stock');
+            session()->flash('error', 'If available must have stock');
+
+            return redirect()->back();
+        }
 
         $product = Product::create(request()->all());
 
