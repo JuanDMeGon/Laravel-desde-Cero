@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\ProductRequest;
 use App\Product;
 
 class ProductController extends Controller
@@ -23,26 +24,9 @@ class ProductController extends Controller
         return view('products.create');
     }
 
-    public function store()
+    public function store(ProductRequest $request)
     {
-        $rules = [
-            'title' => ['required', 'max:255'],
-            'description' => ['required', 'max:1000'],
-            'price' => ['required', 'min:1'],
-            'stock' => ['required', 'min:0'],
-            'status' => ['required', 'in:available,unavailable'],
-        ];
-
-        request()->validate($rules);
-
-        if (request()->status == 'available' && request()->stock == 0) {
-            return redirect()
-                ->back()
-                ->withInput(request()->all())
-                ->withErrors('If available must have stock');
-        }
-
-        $product = Product::create(request()->all());
+        $product = Product::create($request->validated());
 
         return redirect()
             ->route('products.index')
@@ -64,19 +48,9 @@ class ProductController extends Controller
         ]);
     }
 
-    public function update(Product $product)
+    public function update(ProductRequest $request, Product $product)
     {
-        $rules = [
-            'title' => ['required', 'max:255'],
-            'description' => ['required', 'max:1000'],
-            'price' => ['required', 'min:1'],
-            'stock' => ['required', 'min:0'],
-            'status' => ['required', 'in:available,unavailable'],
-        ];
-
-        request()->validate($rules);
-
-        $product->update(request()->all());
+        $product->update($request->validated());
 
         return redirect()
             ->route('products.index')
