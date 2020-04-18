@@ -41,4 +41,9 @@ class Product extends Model
     {
         $query->where('status', 'available');
     }
+
+    public function getTotalAttribute()
+    {
+        return $this->pivot->quantity * $this->price;
+    }
 }

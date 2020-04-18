@@ -6,6 +6,7 @@
         <p class="card-text">{{ $product->description }}</p>
         <p class="card-text"><strong>{{ $product->stock }} left</strong></p>
         @if (isset($cart))
+            <p class="card-text">{{ $product->pivot->quantity }} in your cart <strong>(${{ $product->total }})</strong></p>
             <form
                 class="d-inline"
                 method="POST"
