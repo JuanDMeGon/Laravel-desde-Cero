@@ -2,6 +2,8 @@
 
 namespace Database\Seeders;
 
+use App\Cart;
+use App\Image;
 use App\Order;
 use App\Payment;
 use App\Product;
@@ -17,13 +19,19 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
-        $products = Product::factory(50)->create();
+        $users = User::factory(20)
+            ->create()
+            ->each(function ($user) {
+                $image = Image::factory()
+                    ->user()
+                    ->make();
 
-        $users = User::factory(20)->create();
+                $user->image()->save($image);
+            });
 
         $orders = Order::factory(10)
             ->make()
-            ->each(function($order) use ($users) {
+            ->each(function ($order) use ($users) {
                 $order->customer_id = $users->random()->id;
                 $order->save();
 
@@ -33,6 +41,28 @@ class DatabaseSeeder extends Seeder
                 // $payment->save();
 
                 $order->payment()->save($payment);
+            });
+
+
+        $carts = Cart::factory(20)->create();
+
+        $products = Product::factory(50)
+            ->create()
+            ->each(function ($product) use ($orders, $carts) {
+                $order = $orders->random();
+
+                $order->products()->attach([
+                    $product->id => ['quantity' => mt_rand(1, 3)]
+                ]);
+
+                $cart = $carts->random();
+
+                $cart->products()->attach([
+                    $product->id => ['quantity' => mt_rand(1, 3)]
+                ]);
+
+                $images = Image::factory(mt_rand(2, 4))->make();
+                $product->images()->saveMany($images);
             });
     }
 }
