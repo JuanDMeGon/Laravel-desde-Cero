@@ -11,7 +11,7 @@
             action="{{ route('products.carts.store', ['product' => $product->id]) }}"
         >
             @csrf
-            <button type="submit" class="btn btn-success">Add To Cat</button>
+            <button type="submit" class="btn btn-success">Add To Cart</button>
         </form>
     </div>
 </div>
