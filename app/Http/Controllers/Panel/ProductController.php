@@ -5,13 +5,14 @@ namespace App\Http\Controllers\Panel;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\ProductRequest;
 use App\Product;
+use App\Scopes\AvailableScope;
 
 class ProductController extends Controller
 {
     public function index()
     {
         return view('products.index')->with([
-            'products' => Product::all(),
+            'products' => Product::withoutGlobalScope(AvailableScope::class)->get(),
         ]);
     }
 
