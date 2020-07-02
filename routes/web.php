@@ -25,4 +25,4 @@ Route::resource('orders.payments', 'OrderPaymentController')->only(['create', 's
 
 Auth::routes();
 
-Route::get('/home', 'HomeController@index')->name('home');
+// Route::get('/home', 'HomeController@index')->name('home');
