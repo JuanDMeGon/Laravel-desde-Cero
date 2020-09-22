@@ -1,16 +1,33 @@
 <?php
 
-/** @var \Illuminate\Database\Eloquent\Factory $factory */
+namespace Database\Factories;
 
 use App\Product;
-use Faker\Generator as Faker;
+use Illuminate\Database\Eloquent\Factories\Factory;
+use Illuminate\Support\Str;
 
-$factory->define(Product::class, function (Faker $faker) {
-    return [
-        'title' => $faker->sentence(3),
-        'description' => $faker->paragraph(1),
-        'price' => $faker->randomFloat($maxDecimals = 2, $min = 3, $max = 100),
-        'stock' => $faker->numberBetween(1, 10),
-        'status' => $faker->randomElement(['available', 'unavailable']),
-    ];
-});
+class ProductFactory extends Factory
+{
+    /**
+     * The name of the factory's corresponding model.
+     *
+     * @var string
+     */
+    protected $model = Product::class;
+
+    /**
+     * Define the model's default state.
+     *
+     * @return array
+     */
+    public function definition()
+    {
+        return [
+            'title' => $this->faker->sentence(3),
+            'description' => $this->faker->paragraph(1),
+            'price' => $this->faker->randomFloat($maxDecimals = 2, $min = 3, $max = 100),
+            'stock' => $this->faker->numberBetween(1, 10),
+            'status' => $this->faker->randomElement(['available', 'unavailable']),
+        ];
+    }
+}
