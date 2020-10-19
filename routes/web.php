@@ -29,6 +29,7 @@ Route::resource('orders.payments', 'OrderPaymentController')
 
 Auth::routes([
     'verify' => true,
+    // 'reset' => false,
 ]);
 
 // Route::get('/home', 'HomeController@index')->name('home');
