@@ -19,9 +19,13 @@ Route::resource('products.carts', 'ProductCartController')->only(['store', 'dest
 
 Route::resource('carts', 'CartController')->only(['index']);
 
-Route::resource('orders', 'OrderController')->only(['create', 'store']);
+Route::resource('orders', 'OrderController')
+    ->only(['create', 'store'])
+    ->middleware(['verified']);
 
-Route::resource('orders.payments', 'OrderPaymentController')->only(['create', 'store']);
+Route::resource('orders.payments', 'OrderPaymentController')
+    ->only(['create', 'store'])
+    ->middleware(['verified']);
 
 Auth::routes([
     'verify' => true,
