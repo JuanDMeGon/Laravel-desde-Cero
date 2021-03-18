@@ -29,6 +29,7 @@ class ProductRequest extends FormRequest
             'price' => ['required', 'min:1'],
             'stock' => ['required', 'min:0'],
             'status' => ['required', 'in:available,unavailable'],
+            'images.*' => ['nullable', 'image'],
         ];
     }
 

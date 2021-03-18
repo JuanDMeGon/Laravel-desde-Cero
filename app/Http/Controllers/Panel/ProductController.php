@@ -23,6 +23,7 @@ class ProductController extends Controller
 
     public function store(ProductRequest $request)
     {
+        dd($request->validated());
         $product = PanelProduct::create($request->validated());
 
         return redirect()
@@ -47,6 +48,7 @@ class ProductController extends Controller
 
     public function update(ProductRequest $request, PanelProduct $product)
     {
+        dd($request->validated());
         $product->update($request->validated());
 
         return redirect()
