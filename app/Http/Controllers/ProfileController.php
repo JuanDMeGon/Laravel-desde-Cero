@@ -25,7 +25,7 @@ class ProfileController extends Controller
         return DB::transaction(function () use ($request) {
             $user = $request->user();
 
-            $user->fill($request->validated());
+            $user->fill(array_filter($request->validated()));
 
             if ($user->isDirty('email')) {
                 $user->email_verified_at = null;
