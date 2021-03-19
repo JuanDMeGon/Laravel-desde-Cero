@@ -2,10 +2,11 @@
 
 namespace App;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
 use App\Payment;
 use App\Product;
+use App\Scopes\AvailableScope;
 use App\User;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
 class Order extends Model
@@ -39,6 +40,10 @@ class Order extends Model
 
     public function getTotalAttribute()
     {
-        return $this->products->pluck('total')->sum();
+        return $this->products()
+            ->withoutGlobalScope(AvailableScope::class)
+            ->get()
+            ->pluck('total')
+            ->sum();
     }
 }
